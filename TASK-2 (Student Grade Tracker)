@@ -1,0 +1,78 @@
+class StudentGradeTracker:
+    def __init__(self):
+        # Initialize an empty dictionary to store grades
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        # Add a grade to the specified subject
+        if subject in self.grades:
+            self.grades[subject].append(grade)
+        else:
+            self.grades[subject] = [grade]
+
+    def calculate_average(self):
+        # Compute the average grade across all subjects
+        total_grades = 0
+        count = 0
+        for grades in self.grades.values():
+            total_grades += sum(grades)
+            count += len(grades)
+        return total_grades / count if count != 0 else 0
+
+    def get_letter_grade(self, average):
+        # Determine the letter grade based on the average grade
+        if average >= 90:
+            return 'A'
+        elif average >= 80:
+            return 'B'
+        elif average >= 70:
+            return 'C'
+        elif average >= 60:
+            return 'D'
+        else:
+            return 'F'
+
+    def display_grades(self):
+        # Print the grades for each subject
+        print("Student Grades:")
+        for subject, grades in self.grades.items():
+            print(f"{subject}: {grades}")
+
+    def display_summary(self):
+        # Print the average grade and corresponding letter grade
+        average = self.calculate_average()
+        letter_grade = self.get_letter_grade(average)
+        print("\nSummary:")
+        print(f"Average Grade: {average:.2f}")
+        print(f"Letter Grade: {letter_grade}")
+
+
+def main():
+    tracker = StudentGradeTracker()
+
+    while True:
+        # Menu-driven interface to interact with the grade tracker
+        print("\nOptions:")
+        print("1. Add grade")
+        print("2. Display grades")
+        print("3. Display summary")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            subject = input("Enter subject: ")
+            grade = float(input("Enter grade: "))
+            tracker.add_grade(subject, grade)
+        elif choice == '2':
+            tracker.display_grades()
+        elif choice == '3':
+            tracker.display_summary()
+        elif choice == '4':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
